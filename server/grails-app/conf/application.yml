@@ -1,0 +1,128 @@
+---
+server:
+    servlet:
+        session:
+            cookie:
+                http-only: true
+                secure: true
+        contextPath: /wsinvested
+---
+grails:
+    profile: angular
+    codegen:
+        defaultPackage: mx.saccsa.invested
+    gorm:
+        reactor:
+            # Whether to translate GORM events into Reactor events
+            # Disabled by default for performance reasons
+            events: false
+info:
+    app:
+        name: '@info.app.name@'
+        version: '@info.app.version@'
+        grailsVersion: '@info.app.grailsVersion@'
+spring:
+    jmx:
+        unique-names: true
+    main:
+        banner-mode: "off"
+    groovy:
+        template:
+            check-template-location: false
+    devtools:
+        restart:
+            additional-exclude:
+                - '*.gsp'
+                - '**/*.gsp'
+                - '*.gson'
+                - '**/*.gson'
+                - 'logback.groovy'
+                - '*.properties'
+management:
+    endpoints:
+        enabled-by-default: false
+
+---
+grails:
+    databinding:
+        dateFormats:
+            - "yyyy/MM/dd"
+            - "yyyy-MM-dd"
+            - "MMddyyyy"
+            - "yyyy-MM-dd HH:mm:ss.S"
+            - "yyyy-MM-dd'T'hh:mm:ss.S'Z'"
+            - "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    mime:
+        disable:
+            accept:
+                header:
+                    userAgents:
+                        - Gecko
+                        - WebKit
+                        - Presto
+                        - Trident
+        types:
+            json:
+              - application/json
+              - text/json   
+            hal:
+              - application/hal+json
+              - application/hal+xml  
+            xml:
+              - text/xml
+              - application/xml                                 
+            atom: application/atom+xml
+            css: text/css
+            csv: text/csv
+            js: text/javascript
+            rss: application/rss+xml
+            text: text/plain
+            all: '*/*'            
+    urlmapping:
+        cache:
+            maxsize: 1000
+    controllers:
+        defaultScope: singleton
+    converters:
+        encoding: UTF-8
+    views:
+        json:
+            generator:
+                dateFormat: "yyyy-MM-dd"
+
+---
+grails:
+    cors:
+        enabled: true
+---
+hibernate:
+    cache:
+        queries: false
+        use_second_level_cache: false
+        use_query_cache: false
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: "com.mysql.jdbc.Driver"
+
+environments:
+    development:
+        dataSource:
+            type: "com.zaxxer.hikari.HikariDataSource"
+            dbCreate: update
+            url: "jdbc:mysql://127.0.0.1:3306/invested?autoReconnect=true"
+            username: "root"
+            password: ""
+    test:
+        dataSource:
+            dbCreate: update
+            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    production:
+        dataSource:
+            dbCreate: none
+            jndiName: "java:comp/env/jdbc/invested"
+---
+jasper:
+    dir:
+        reports: 'reports'
+    images: 'images/'
